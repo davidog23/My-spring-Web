@@ -9,13 +9,13 @@ import javax.validation.constraints.NotNull;
  */
 public class UserCreateForm {
     @NotEmpty
-    private String username;
+    private String username = "";
 
     @NotEmpty
-    private String password;
+    private String password = "";
 
     @NotEmpty
-    private String passwordRepeated;
+    private String passwordRepeated = "";
 
     @NotNull
     private Role role = Role.USER;
@@ -34,5 +34,31 @@ public class UserCreateForm {
 
     public String getPasswordRepeated() {
         return passwordRepeated;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordRepeated(String passwordRepeated) {
+        this.passwordRepeated = passwordRepeated;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "UserCreateForm{" +
+                "email='" + '\'' +
+                ", password=***" + '\'' +
+                ", passwordRepeated=***" + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

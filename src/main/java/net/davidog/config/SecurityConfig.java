@@ -46,7 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-                .rememberMe();
+                .rememberMe()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
+                .requiresChannel().anyRequest().requiresSecure();
     }
 
     @Override

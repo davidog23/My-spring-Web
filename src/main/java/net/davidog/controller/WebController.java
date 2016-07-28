@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -54,9 +55,9 @@ public class WebController {
         return new ModelAndView("users", "users", userService.getAllUsers());
     }
 
-    @PreAuthorize("@currentUserServiceImpl.canAccessUser(currentUser.user, username)")
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #username)")
     @RequestMapping("/user/{username}")
-    public ModelAndView getUserPage(@PathVariable String username, CurrentUser currentUser) {
+    public ModelAndView getUserPage(@PathVariable String username, @AuthenticationPrincipal CurrentUser currentUser) {
         return new ModelAndView("user", "user", userService.getUserByUsername(username)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", username))));
     }
@@ -79,6 +80,7 @@ public class WebController {
             bindingResult.reject("username.exists", "Username already exists");
             return "user_create";
         }
+        logger.info("Created user: " + form.getUsername() + " as " + form.getRole().toString());
         return "redirect:/users";
     }
 
@@ -86,6 +88,11 @@ public class WebController {
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         logger.debug("Getting login page, error={}", error);
         return new ModelAndView("login", "error", error);
+    }
+
+    @RequestMapping(value = "/403")
+    public ModelAndView getAccessDeniedPage() {
+        return new ModelAndView("403");
     }
 
 }

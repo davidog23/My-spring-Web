@@ -20,7 +20,7 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
     <div>
-        <label for="username">Email address</label>
+        <label for="username">Username</label>
         <input type="text" name="username" id="username" value="${form.username}" required autofocus/>
     </div>
     <div>
