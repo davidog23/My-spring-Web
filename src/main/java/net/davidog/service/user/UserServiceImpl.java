@@ -1,6 +1,5 @@
 package net.davidog.service.user;
 
-import net.davidog.model.CurrentUser;
 import net.davidog.model.User;
 import net.davidog.model.UserCreateForm;
 import net.davidog.model.UserEditForm;
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll(new Sort("username"));
+        return userRepository.findAll(new Sort("role", "username"));
     }
 
     @Override
