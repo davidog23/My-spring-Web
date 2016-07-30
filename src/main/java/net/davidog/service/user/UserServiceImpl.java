@@ -1,7 +1,9 @@
 package net.davidog.service.user;
 
+import net.davidog.model.CurrentUser;
 import net.davidog.model.User;
 import net.davidog.model.UserCreateForm;
+import net.davidog.model.UserEditForm;
 import net.davidog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,6 +27,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public Optional<User> getUserById(long id) {
+        return Optional.ofNullable(userRepository.findOne(id));
+    }
+
+    @Override
     public Optional<User> getUserByUsername(String username) {
         return userRepository.findOneByUsername(username);
     }
@@ -39,6 +46,15 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(form.getUsername());
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        user.setRole(form.getRole());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User update(UserEditForm form) {
+        //assert form.getId() != null;
+        User user = userRepository.findOne(form.getId());
+        user.setUsername(form.getUsername());
         user.setRole(form.getRole());
         return userRepository.save(user);
     }

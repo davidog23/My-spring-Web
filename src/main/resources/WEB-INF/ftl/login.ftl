@@ -15,7 +15,7 @@
 
 <h1>Log in</h1>
 
-<p>You can use: demo@localhost / demo</p>
+<p>You can use: davidolmos / 123456</p>
 
 <form role="form" action="/login" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -36,7 +36,7 @@
 </form>
 
 <#if error.isPresent()>
-<p>The email or password you have entered is invalid, try again.</p>
+<p>The username or password you have entered is invalid, try again.</p>
 </#if>
 </body>
 </html>

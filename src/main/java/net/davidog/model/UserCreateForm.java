@@ -55,7 +55,7 @@ public class UserCreateForm {
     @Override
     public String toString() {
         return "UserCreateForm{" +
-                "email='" + '\'' +
+                "username='" + '\'' +
                 ", password=***" + '\'' +
                 ", passwordRepeated=***" + '\'' +
                 ", role=" + role +

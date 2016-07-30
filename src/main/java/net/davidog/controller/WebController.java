@@ -2,7 +2,9 @@ package net.davidog.controller;
 
 import net.davidog.model.CurrentUser;
 import net.davidog.model.UserCreateForm;
+import net.davidog.model.UserEditForm;
 import net.davidog.model.validator.UserCreateFormValidator;
+import net.davidog.model.validator.UserEditFormValidator;
 import net.davidog.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,23 @@ public class WebController {
 
     private final UserService userService;
     private final UserCreateFormValidator userCreateFormValidator;
+    private final UserEditFormValidator userEditFormValidator;
 
     @Autowired
-    public WebController(UserService userService, UserCreateFormValidator userCreateFormValidator) {
+    public WebController(UserService userService, UserCreateFormValidator userCreateFormValidator, UserEditFormValidator userEditFormValidator) {
         this.userService = userService;
         this.userCreateFormValidator = userCreateFormValidator;
+        this.userEditFormValidator = userEditFormValidator;
     }
 
-    @InitBinder("form")
-    public void initBinder(WebDataBinder binder) {
+    @InitBinder("createForm")
+    public void initBinderCreate(WebDataBinder binder) {
         binder.addValidators(userCreateFormValidator);
+    }
+
+    @InitBinder("editForm")
+    public void initBinderEdit(WebDataBinder binder) {
+        binder.addValidators(userEditFormValidator);
     }
 
     @RequestMapping("/")
@@ -55,32 +64,55 @@ public class WebController {
         return new ModelAndView("users", "users", userService.getAllUsers());
     }
 
-    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #username)")
-    @RequestMapping("/user/{username}")
-    public ModelAndView getUserPage(@PathVariable String username, @AuthenticationPrincipal CurrentUser currentUser) {
-        return new ModelAndView("user", "user", userService.getUserByUsername(username)
-                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", username))));
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #id)")
+    @RequestMapping("/user/{id}")
+    public ModelAndView getUserPage(@PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser) {
+        return new ModelAndView("user", "user", userService.getUserById(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
+    }
+
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #id)")
+    @RequestMapping(value = "/user/{id}/edit", method = RequestMethod.GET)
+    public ModelAndView getUserEditPage(@PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser) {
+        return new ModelAndView("user_edit", "editForm", new UserEditForm(userService.getUserById(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id)))));
+    }
+
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #id)")
+    @RequestMapping(value = "/user/{id}/edit", method = RequestMethod.POST)
+    public String handleUserEditForm(@Valid @ModelAttribute("editForm") UserEditForm editForm, @PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user_edit";
+        }
+        try {
+            userService.update(editForm);
+        } catch (DataIntegrityViolationException e) {
+            bindingResult.reject("username.exists", "Username already exists");
+            return "user_edit";
+        }
+        logger.info("Updated user number: " + editForm.getId() + " to username: " + editForm.getUsername() + " as " + editForm.getRole().toString());
+        return "redirect:/users";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
-        return new ModelAndView("user_create", "form", new UserCreateForm());
+        return new ModelAndView("user_create", "createForm", new UserCreateForm());
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
+    public String handleUserCreateForm(@Valid @ModelAttribute("createForm") UserCreateForm createForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user_create";
         }
         try {
-            userService.create(form);
+            userService.create(createForm);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("username.exists", "Username already exists");
             return "user_create";
         }
-        logger.info("Created user: " + form.getUsername() + " as " + form.getRole().toString());
+        logger.info("Created user: " + createForm.getUsername() + " as " + createForm.getRole().toString());
         return "redirect:/users";
     }
 

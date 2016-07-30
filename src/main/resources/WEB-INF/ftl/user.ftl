@@ -12,10 +12,9 @@
     </ul>
 </nav>
 
-<h1>User details</h1>
+<h1>User details - <a href="/user/${user.id}/edit">Edit</a></h1>
 
 <p>Username: ${user.username}</p>
-
 <p>Role: ${user.role}</p>
 </body>
 </html>

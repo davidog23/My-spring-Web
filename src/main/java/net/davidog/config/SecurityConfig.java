@@ -26,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -48,9 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .rememberMe()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                .and()
-                .requiresChannel().anyRequest().requiresSecure();
+                .exceptionHandling().accessDeniedPage("/403");
+        if(securityProperties.isRequireSsl())
+        http.requiresChannel().anyRequest().requiresSecure();
     }
 
     @Override

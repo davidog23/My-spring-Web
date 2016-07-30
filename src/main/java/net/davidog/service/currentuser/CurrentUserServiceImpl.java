@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CurrentUserServiceImpl implements CurrentUserService {
     @Override
-    public boolean canAccessUser(CurrentUser currentUser, String username) {
+    public boolean canAccessUser(CurrentUser currentUser, Long id) {
         return currentUser != null
-                && (currentUser.getRole() == Role.ADMIN || currentUser.getUsername().equals(username));
+                && (currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(id));
     }
 }

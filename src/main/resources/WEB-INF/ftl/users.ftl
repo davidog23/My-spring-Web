@@ -25,8 +25,9 @@
     <tbody>
     <#list users as user>
     <tr>
-        <td><a href="/user/${user.username}">${user.username}</a></td>
+        <td><a href="/user/${user.id}">${user.username}</a></td>
         <td>${user.role}</td>
+        <td> - <a href="/user/${user.id}/edit">Edit user</a></td>
     </tr>
     </#list>
     </tbody>

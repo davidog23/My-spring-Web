@@ -2,6 +2,7 @@ package net.davidog.repository;
 
 import net.davidog.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
