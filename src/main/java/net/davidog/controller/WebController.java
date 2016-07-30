@@ -85,6 +85,7 @@ public class WebController {
             return "user_edit";
         }
         try {
+            editForm.setId(id);
             userService.update(editForm);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("username.exists", "Username already exists");
