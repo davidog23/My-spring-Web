@@ -21,7 +21,7 @@
         </li>
         <li><a href="/user/${currentUser.id}">View myself</a></li>
     </#if>
-    <#if currentUser?? && currentUser.role == "ADMIN">
+    <#if currentUser?? && (currentUser.role == "ADMIN" || currentUser.role == "SAMPLE")>
         <li><a href="/user/create">Create a new user</a></li>
         <li><a href="/users">View all users</a></li>
     </#if>
