@@ -1,6 +1,7 @@
 package net.davidog.controller;
 
 import net.davidog.model.CurrentUser;
+import net.davidog.model.Role;
 import net.davidog.model.UserCreateForm;
 import net.davidog.model.UserEditForm;
 import net.davidog.model.validator.UserCreateFormValidator;
@@ -86,13 +87,14 @@ public class WebController {
         }
         try {
             editForm.setId(id);
+            if (!currentUser.getRole().equals(Role.ADMIN)) editForm.setRole(currentUser.getRole());
             userService.update(editForm);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("username.exists", "Username already exists");
             return "user_edit";
         }
         logger.info("Updated user number: " + editForm.getId() + " to username: " + editForm.getUsername() + " as " + editForm.getRole().toString());
-        return "redirect:/users";
+        return currentUser.getRole().equals(Role.ADMIN) ? "redirect:/users" : "redirect:/user/" + id;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

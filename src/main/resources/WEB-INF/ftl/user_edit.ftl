@@ -27,6 +27,9 @@
             </select>
         </div>
     </#if>
+    <#if currentUser.role != 'ADMIN'>
+        <input type="hidden" name="role" id="role" value="${editForm.role}">
+    </#if>
     <button type="submit">Save</button>
 </form>
 
