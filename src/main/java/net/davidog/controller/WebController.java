@@ -79,7 +79,7 @@ public class WebController {
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id)))));
     }
 
-    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, #id)")
+    @PreAuthorize("@currentUserServiceImpl.canEditUser(#currentUser.user, #id)")
     @RequestMapping(value = "/user/{id}/edit", method = RequestMethod.POST)
     public String handleUserEditForm(@Valid @ModelAttribute("editForm") UserEditForm editForm, @PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -97,9 +97,9 @@ public class WebController {
         return currentUser.getRole().equals(Role.ADMIN) ? "redirect:/users" : "redirect:/user/" + id;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(#currentUser.user, -1)")
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
-    public ModelAndView getUserCreatePage() {
+    public ModelAndView getUserCreatePage(@AuthenticationPrincipal CurrentUser currentUser) {
         return new ModelAndView("user_create", "createForm", new UserCreateForm());
     }
 

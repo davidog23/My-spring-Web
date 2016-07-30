@@ -7,4 +7,6 @@ import net.davidog.model.CurrentUser;
  */
 public interface CurrentUserService {
     boolean canAccessUser(CurrentUser currentUser, Long id);
+
+    boolean canEditUser(CurrentUser currentUser, Long id);
 }

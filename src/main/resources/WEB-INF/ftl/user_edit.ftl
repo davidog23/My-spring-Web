@@ -23,6 +23,7 @@
             <label for="role">Role</label>
             <select name="role" id="role" required>
                 <option <#if editForm.role == 'USER'>selected</#if>>USER</option>
+                <option <#if editForm.role == 'SAMPLE'>selected</#if>>SAMPLE</option>
                 <option <#if editForm.role == 'ADMIN'>selected</#if>>ADMIN</option>
             </select>
         </div>

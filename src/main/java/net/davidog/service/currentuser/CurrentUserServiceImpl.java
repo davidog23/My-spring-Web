@@ -13,6 +13,12 @@ public class CurrentUserServiceImpl implements CurrentUserService {
     @Override
     public boolean canAccessUser(CurrentUser currentUser, Long id) {
         return currentUser != null
+                && (currentUser.getRole() == Role.ADMIN || currentUser.getRole() == Role.SAMPLE || currentUser.getId().equals(id));
+    }
+
+    @Override
+    public boolean canEditUser(CurrentUser currentUser, Long id) {
+        return currentUser != null
                 && (currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(id));
     }
 }
