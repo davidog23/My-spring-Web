@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>List of Users</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <nav role="navigation">
@@ -32,5 +34,8 @@
     </#list>
     </tbody>
 </table>
+
+<script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="application/javascript" src="js/bootstrap.min.js"></script>
 </body>
 </html>

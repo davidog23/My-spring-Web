@@ -7,6 +7,8 @@
 <head>
     <meta charset="utf-8">
     <title>Edit ${editForm.username}</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <h1>Edit a existing user</h1>
@@ -42,5 +44,8 @@
     </#list>
 </ul>
 </#if>
+
+<script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="application/javascript" src="js/bootstrap.min.js"></script>
 </body>
 </html>
