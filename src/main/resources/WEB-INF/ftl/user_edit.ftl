@@ -18,7 +18,7 @@
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="${editForm.username}" required autofocus/>
     </div>
-    <#if currentUser.role == 'ADMIN'>
+    <#if currentUser.role == 'ADMIN' || currentUser.role == 'SAMPLE'>
         <div>
             <label for="role">Role</label>
             <select name="role" id="role" required>
