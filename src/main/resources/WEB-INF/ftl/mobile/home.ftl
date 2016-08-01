@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/base.css" rel="stylesheet" class="hidden-sm-down">
+    <link href="/css/mobile/base.css" rel="stylesheet" class="hidden-sm-down">
 </head>
 <body>
-
+<div class="container">
     <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </nav>
-
+</div>
 
 <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="application/javascript" src="js/bootstrap.min.js"></script>

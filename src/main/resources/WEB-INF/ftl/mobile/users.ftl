@@ -1,18 +1,18 @@
+<#-- @ftlvariable name="users" type="java.util.List<net.davidog.model.User>" -->
+<#-- @ftlvariable name="currentUser" type="net.davidog.model.CurrentUser" -->
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
-<#-- @ftlvariable name="createForm" type="net.davidog.model.UserCreateForm" -->
-<#import "/spring.ftl" as spring>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Create a new user</title>
+    <title>List of Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/base.css" rel="stylesheet">
+    <link href="/css/mobile/base.css" rel="stylesheet">
 </head>
 <body>
-
+<div class="container">
     <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -49,46 +49,27 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1>Create a new user</h1>
+    <h2>List of Users</h2>
 
-        <form role="form" name="createForm" action="" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list users as user>
+        <tr>
+            <td><a href="/user/${user.id}">${user.username}</a></td>
+            <td>${user.role}</td>
+            <td><a href="/user/${user.id}/edit">Edit user</a></td>
+        </tr>
+        </#list>
+        </tbody>
+    </table>
 
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" value="${createForm.username}" class="form-control" required autofocus/>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" class="form-control" required/>
-            </div>
-            <div class="form-group">
-                <label for="passwordRepeated">Repeat password:</label>
-                <input type="password" name="passwordRepeated" id="passwordRepeated" class="form-control" required/>
-            </div>
-            <div class="form-group">
-                <label for="role">Role:</label>
-                <select name="role" id="role" class="form-control" required>
-                    <option <#if createForm.role == 'USER'>selected</#if>>USER</option>
-                    <option <#if createForm.role == 'SAMPLE'>selected</#if>>SAMPLE</option>
-                    <option <#if createForm.role == 'ADMIN'>selected</#if>>ADMIN</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-lg btn-primary" role="button">Save &raquo;</button>
-        </form>
-
-        <@spring.bind "createForm" />
-        <#if spring.status.error>
-        <ul>
-            <#list spring.status.errorMessages as error>
-                <li>${error}</li>
-            </#list>
-        </ul>
-        </#if>
-
-    </div>
-
+</div>
 
 <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>

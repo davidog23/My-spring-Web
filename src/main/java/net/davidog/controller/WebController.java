@@ -129,5 +129,4 @@ public class WebController {
     public ModelAndView getAccessDeniedPage() {
         return new ModelAndView("403");
     }
-
 }

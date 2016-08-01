@@ -12,7 +12,7 @@
     <link href="/css/base.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
+
     <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -49,27 +49,28 @@
         </div>
     </nav>
 
-    <h2>List of Users</h2>
+    <div class="container">
+        <h2>List of Users</h2>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Role</th>
-        </tr>
-        </thead>
-        <tbody>
-        <#list users as user>
-        <tr>
-            <td><a href="/user/${user.id}">${user.username}</a></td>
-            <td>${user.role}</td>
-            <td><a href="/user/${user.id}/edit">Edit user</a></td>
-        </tr>
-        </#list>
-        </tbody>
-    </table>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list users as user>
+            <tr>
+                <td><a href="/user/${user.id}">${user.username}</a></td>
+                <td>${user.role}</td>
+                <td><a href="/user/${user.id}/edit">Edit user</a></td>
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+    </div>
 
-</div>
 
 <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>

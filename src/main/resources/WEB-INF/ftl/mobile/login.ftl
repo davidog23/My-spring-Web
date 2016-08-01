@@ -8,12 +8,12 @@
 
     <title>Sign in</title>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/login.css" rel="stylesheet">
-    <link href="/css/base.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <link href="css/mobile/base.css" rel="stylesheet">
 </head>
 <body>
-
+<div class="container">
     <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -60,7 +60,7 @@
         <p>The username or password you have entered is invalid, try again.</p>
         </#if>
     </div>
-
+</div>
     <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="application/javascript" src="js/bootstrap.min.js"></script>
 </body>

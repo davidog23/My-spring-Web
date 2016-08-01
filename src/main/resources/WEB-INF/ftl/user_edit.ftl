@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<div class="container">
+
     <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -51,7 +51,7 @@
         </div>
     </nav>
 
-    <div class="jumbotron">
+    <div class="jumbotron container">
         <h1>Edit a existing user</h1>
 
         <form role="form" name="editForm" action="" method="post">
@@ -86,7 +86,7 @@
         </ul>
         </#if>
     </div>
-</div>
+
 
 <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
